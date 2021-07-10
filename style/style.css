@@ -17,6 +17,11 @@
     flex-direction: column;
     height: 850px;
     justify-content: space-between;
+    background: rgba(0, 0, 0, 0);
+}
+
+.block__container {
+    background: rgba(0, 0, 0, 0);
 }
 
 .input {
@@ -104,6 +109,7 @@
     height: 500px;
     width: 290px;
     position: relative;
+    overflow: hidden;
 }
 
 .elips {

@@ -1,9 +1,9 @@
 class GAME {
     constructor (game) {
-        this.ctx   = game.context;
-        this.time  =   game.timer;
-        this.x     =    game.posX;
-        this.y     =    game.posY;
+        this.number = game.number;
+        this.time   =  game.timer;
+        this.x      =   game.posX;
+        this.y      =   game.posY;
 
 
         this.result = document.querySelector('.result');
@@ -18,8 +18,7 @@ class GAME {
                       'orange',  '#26ff00',  '#6f00ff'
         ]
                     
-        this.number = 0;
-
+        
         this.btn.onclick = () => this.draw(5, 20, 49); 
         this.btn.onclick = () => this.timerGame(); 
     }
@@ -32,15 +31,21 @@ class GAME {
             
             this.timer.innerHTML = `0${this.min} : ${this.sec}`;
 
-            setTimeout(() => this.timerGame(), 1000);
-            setTimeout(() => this.draw(5, 20, 49),1000);
+            setTimeout(() => this.timerGame(), this.time);
+            setTimeout(() => this.draw(6, 25, 45),this.time);
         } 
         else if (this.input.value == 0) {
             this.timer.innerHTML = 'Игра Окончена';
+            this.input.value     =  '';
+
+            this.btn.innerHTML = 'Начать заново';
+            this.btn.href      = '';
         }
         else if (this.input.value < 0) {
             this.timer.innerHTML = 'Вы ввели отрицательное число';
+            this.input.value     = '';
         }
+
     }
     
     
@@ -49,7 +54,7 @@ class GAME {
         this.y = Math.floor(Math.random() * 10 * (min, maxY));
         this.colorIndex = Math.floor(Math.random() * 10);
 
-        this.colorIndex === 9 ? this.colorIndex-- : '';
+        this.colorIndex === 9 ? this.colorIndex = 8 : '';
 
         this.elips = document.createElement('div');
 
@@ -66,24 +71,24 @@ class GAME {
         this.elipsHtml = document.querySelectorAll('.elips');
         
         for (let i = 0; i < this.elipsHtml.length; i++) {
-            let deleteElips = (elips) => elips.remove();
-
             this.elipsHtml[i].onclick = () => {
-                deleteElips(this.elipsHtml[i]);
+                this.elipsHtml[i].remove();
                 
                 this.number++;
-                console.log(this.number);
 
                 this.result.innerHTML = this.number;
             }
 
-            setTimeout(() => deleteElips(this.elipsHtml[i]),3000);
+            this.input.value == 0 ? this.elipsHtml[i].remove() : '';
+
+            setTimeout(() => this.elipsHtml[0].remove(), this.time * 3);
         }
     }
 }
 
 const game = new GAME ({
-    timer: 0,
+    timer: 1000,
+    number: 0,
     posX: 0,
     posY: 0,
 })
